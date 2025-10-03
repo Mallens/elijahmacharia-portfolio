@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elijah.M macharia-Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .bg-custom-orange { background-color: #FF5722; }
+        .text-custom-orange { color: #FF5722; }
+        .border-custom-orange { border-color: #FF5722; }
+
+        /* FIXED QUADRANT BACKGROUND (unchanged) */
+        #fixed-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 120vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            z-index: -1;
+        }
+        #quadrant-1 { background-color: #FF5722; grid-area: 1 / 1 / 2 / 2; }
+        #quadrant-2 { background-color: #111; grid-area: 1 / 2 / 2 / 3; }
+        #quadrant-3 { background-color: #111; grid-area: 2 / 1 / 3 / 2; }
+        #quadrant-4 { background-color: #FF5722; grid-area: 2 / 2 / 3 / 3; }
+
+        /* Main content wrapper, which scrolls over the fixed background (unchanged) */
+        #main-content-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 200vh;
+            padding-top: 2rem;
+        }
+
+        /* Container for the two "floating window" panels (unchanged) */
+        #floating-panels-container {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* INDIVIDUAL PANEL STYLING - KEY CHANGES HERE */
+        .floating-panel {
+            /* 1. Glassmorphism Blur Effect */
+            background-color: rgba(10, 10, 10, 0.5); /* Slightly lighter black with more transparency */
+            backdrop-filter: blur(10px); /* Adjust the pixel value for desired blur intensity */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+
+            /* 2. Smooth Corners */
+            border-radius: 20px; /* Radius for smooth corners */
+
+            /* Other floating styles */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8); /* Increased shadow for better floating look */
+            padding: 2.5rem; /* Increased padding slightly for aesthetics */
+            min-height: 100vh;
+        }
+
+        /* Header (fixed position) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Add mild blur to the header too */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Utility for skill bars (unchanged) */
+        .skill-bar-fill {
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 1s ease-out;
+        }
+
+        /* Responsive adjustments (unchanged) */
+        @media (max-width: 1024px) {
+            #floating-panels-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+                width: 100%;
+            }
+            .floating-panel {
+                min-height: auto;
+            }
+            #fixed-background {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+            }
+            #quadrant-1 { grid-area: 1 / 1 / 2 /2; }
+            #quadrant-2 { grid-area: 2 / 1 / 3 / 2; }
+            #quadrant-3 { grid-area: 3 / 1 / 4 / 2; }
+            #quadrant-4 { grid-area: 4 / 1 / 5 / 2; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fixed-background">
+        <div id="quadrant-1"></div>
+        <div id="quadrant-2"></div>
+        <div id="quadrant-3"></div>
+        <div id="quadrant-4"></div>
+    </div>
+
+    <header>
+        <nav class="container mx-auto px-4 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="security.png" alt="Elijah.M macharia" style="width: 50px;height: 50px;;;" class="w-full h-full object-cover">
+                <span class="text-xl font-bold">development & security</span>
+            </div>
+            <ul class="hidden lg:flex space-x-8 text-sm font-medium">
+                <li><a href="#hero-section" class="text-custom-orange hover:text-white transition">About me</a></li>
+                <li><a href="#services-section" class="hover:text-custom-orange transition">Services</a></li>
+                <li><a href="#projects-section" class="hover:text-custom-orange transition">projects</a></li>
+                <li><a href="#testimonials-section" class="hover:text-custom-orange transition">Testimonials</a></li>
+                <li><a href="#skills-section" class="hover:text-custom-orange transition">skills</a></li>
+                <li><a href="#contacts-section" class="hover:text-custom-orange transition">Contacts</a></li>
+            </ul>
+            <a href="https://wa.me/254798206270?text=Hi%20Macharia%2C%20I%27m%20interested%20in%20hiring%20you%20for%20a%20project" 
+               class="px-8 py-3 bg-custom-orange hover:bg-red-600 text-white font-medium rounded-full transition">click me</a>
+            <button class="lg:hidden text-white text-2xl">&#9776;</button>
+        </nav>
+    </header>
+
+    <div id="main-content-wrapper">
+
+        <div id="floating-panels-container">
+
+            <div class="floating-panel">
+                <section id="hero-section" class="min-h-[50vh] flex items-center pt-8 pb-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+                        <div class="lg:col-span-3">
+                            <span class="text-custom-orange text-sm font-medium tracking-widest">HELLO I'M</span>
+                            <h1 class="text-5xl lg:text-7xl font-bold my-4 leading-tight">Elijah.M Macharia</h1>
+                            <p class="text-lg text-gray-400 mb-8">Aspiring Software Developer | Cybersecurity Enthusiast</p>
+                            <div class="flex space-x-4">
+                                <a href="Elijah M.docx" class="px-8 py-3 bg-custom-orange hover:bg-red-600 text-white font-medium rounded-full transition">DOWNLOAD RESUME</a>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2 flex justify-center lg:justify-end">
+                            <div class="w-full max-w-sm h-[450px] overflow-hidden relative">
+                                <img src="profile.png.png" alt="Elijah.M macharia" style="width: 300px;height:800px;" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div>
+                        <h2 class="text-4xl font-bold mb-4">About me</h2>
+                        <p>I am a passionate and versatile Computer Science professional with strong expertise in cybersecurity, software development, and visual design. Over the years, I’ve built a unique blend of technical and creative skills—ranging from developing secure desktop applications to designing engaging graphics and branding materials. My work stands out for its precision, creativity, and problem-solving approach, whether I’m safeguarding systems, crafting user-friendly digital interfaces, or building innovative solutions that streamline processes. With a keen eye for detail and a drive for excellence, I thrive in environments where technology and creativity intersect, consistently delivering impactful results that are both functional and visually compelling</p>
+                    </div>
+                </section>
+
+                <section id="story-section" class="py-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <div class="flex flex-col space-y-8">
+                            <div class="relative">
+                                <img src="image.png" alt="Coding Setup" style="width: 500px;height: 300px;" class="w-full h-auto object-cover">
+                                <div class="absolute -bottom-8 left-0 lg:-left-8 bg-custom-orange p-4 text-center">
+                                    <p class="text-sm font-medium">Area of study</p>
+                                    <p class="text-2xl font-bold">COMPUTER <br> SCIENCE</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="skills-section" class="pt-16 lg:pt-0">
+                            <h2 class="text-4xl font-bold mb-4">SKILLS & TOOLS</h2>
+                            <p class="text-gray-400 mb-8">open to learn more</p>                            
+                            <div class="space-y-6">
+                                <div class="skill-group">
+                                    <p class="flex justify-between mb-1 text-sm font-medium"><span>HTML/CSS</span><span>95%</span></p>
+                                    <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 95%;"></div></div>
+                                </div>
+                                <div class="skill-group">
+                                    <p class="flex justify-between mb-1 text-sm font-medium"><span>CYBER SECURITY </span><span>70%</span></p>
+                                    <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 70%;"></div></div>
+                                </div>
+                                <div class="skill-group">
+                                    <p class="flex justify-between mb-1 text-sm font-medium"><span>PYTHON</span><span>85%</span></p>
+                                    <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 85%;"></div></div>
+                                </div>
+                                <div class="skill-group">
+                                    <p class="flex justify-between mb-1 text-sm font-medium"><span>JAVASCRIPT</span><span>90%</span></p>
+                                    <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 90%;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="space-y-6">
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>MICROSOFT WORD</span><span>98%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 98%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>MICROSOFT EXCELL</span><span>96%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 96%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>MICROSOFT PUBLISHER</span><span>95%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>MICROSOFT POWERPOINT</span><span>95%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>CANVA</span><span>84%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 84%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>COREL DRAW</span><span>80%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 80%;"></div></div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="flex justify-between mb-1 text-sm font-medium"><span>KALI LINUX</span><span>75%</span></p>
+                            <div class="bg-gray-800 w-full h-1 relative"><div class="skill-bar-fill" style="width: 75%;"></div></div>
+                        </div>
+                        <div class="flex space-x-4 mt-8">
+                        <a href="mailto:mungaimacharia904@gmail.com" class="px-8 py-3 bg-custom-orange hover:bg-red-600 text-white font-medium rounded-full transition">Email me</a>
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="py-10 text-center text-gray-500 text-sm border-t border-gray-800 mt-10">
+                </footer>
+            </div>
+
+            <div class="floating-panel lg:block">
+                
+                <section id="services-section" class="py-12 border-b border-gray-800">
+                    <div class="text-center">
+                        <span class="text-custom-orange text-sm font-medium tracking-widest">OUR SERVICES</span>
+                        <h2 class="text-3xl font-bold mt-2 mb-8">What I Offer</h2>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-black border border-gray-800 p-6 text-left hover:border-custom-orange transition duration-300">
+                                <div class="text-custom-orange text-2xl mb-2">&#9881;</div>
+                                <h3 class="text-lg font-semibold">FRONT END DEVELOPMENT</h3>
+                                <p class="text-gray-400 text-xs mt-1">I create responsive and user-friendly websites using modern frameworks and design principles, ensuring seamless user experiences across all devices.</p>
+                            </div>
+                            <div class="bg-black border border-custom-orange p-6 text-left">
+                                <div class="text-custom-orange text-2xl mb-2">&#9998;</div>
+                                <h3 class="text-lg font-semibold">GRAPHIC AND DESIGN</h3>
+                                <p class="text-gray-400 text-xs mt-1">I craft visually compelling graphics, branding materials, and digital interfaces that combine creativity with strategic impact.</p>
+                            </div>
+                            <div class="bg-black border border-gray-800 p-6 text-left hover:border-custom-orange transition duration-300">
+                                <div class="text-custom-orange text-2xl mb-2">&#9874;</div>
+                                <h3 class="text-lg font-semibold">CYBER SECURITY SERVICES</h3>
+                                <p class="text-gray-400 text-xs mt-1">I specialize in safeguarding systems through threat analysis, secure application development, and proactive defense strategies against cyberattacks.</p>
+                            </div>
+                            <div class="bg-black border border-gray-800 p-6 text-left hover:border-custom-orange transition duration-300">
+                                <div class="text-custom-orange text-2xl mb-2">&#9993;</div>
+                                <h3 class="text-lg font-semibold">SOFTWARE ENGINEERING</h3>
+                                <p class="text-gray-400 text-xs mt-1">I design, develop, and optimize reliable software solutions by applying engineering principles to create scalable, efficient, and user-focused applications.</p>
+                            </div>
+                        </div>
+
+                        <div class=" items-center mt-8 py-4 border-t border-gray-800" >
+                            <div class="text-center">
+                                <h2 class="text-2xl text-custom-orange text-sm font-medium tracking-widest">Languages:</h2>
+                                <p class="text-gra3-400 text-xs"></p>
+                            </div>
+                            <div class="flex justify-center text-center">
+                                <p class="text-2xl font-bold">English</p>
+                                
+                            </div>
+                            <div class="flex justify-center text-center">
+                                <p class="text-2xl font-bold">Swahili</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="projects-section" class="py-8 border-b border-gray-800">
+                    <div class="text-center">
+                        <span class="text-custom-orange text-sm font-medium tracking-widest">E.M.M PORTFOLIO</span>
+                        <h2 class="text-3xl font-bold mt-2 mb-8">My Recent Work</h2>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="relative group overflow-hidden">
+                                <img src="https://via.placeholder.com/600x450/111/FF5722?text=P1" alt="Project 1" class="w-full h-auto transition duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-custom-orange/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <h3 class="text-md font-bold">Project Title</h3>
+                                </div>
+                            </div>
+                            <div class="relative group overflow-hidden">
+                                <img src="https://via.placeholder.com/600x450/222/FFFFFF?text=P2" alt="Project 2" class="w-full h-auto transition duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <h3 class="text-md font-bold">Project Title</h3>
+                                </div>
+                            </div>
+                            <div class="relative group overflow-hidden">
+                                <img src="https://via.placeholder.com/600x450/111/FF5722?text=P3" alt="Project 3" class="w-full h-auto transition duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-custom-orange/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <h3 class="text-md font-bold">Project Title</h3>
+                                </div>
+                            </div>
+                            <div class="relative group overflow-hidden">
+                                <img src="https://via.placeholder.com/600x450/222/FFFFFF?text=P4" alt="Project 4" class="w-full h-auto transition duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                                    <h3 class="text-md font-bold">Project Title</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="testimonials-section" class="py-12 border-b border-gray-800">
+                    <div class="text-center">
+                        <span class="text-custom-orange text-sm font-medium tracking-widest">TESTIMONIALS</span>
+                        <h2 class="text-3xl font-bold mt-2 mb-8">What Clients Say</h2>
+                        
+                        <div class="max-w-xl mx-auto bg-black border border-gray-800 p-6 relative">
+                            <img src="brandon leon.jpg" alt="Client DP" class="rounded-full w-14 h-14 mx-auto -mt-10 border-4 border-[#0a0a0a]">
+                            <p class="text-gray-400 italic mt-4 text-sm">“Elijah delivered exactly what I needed, on time and with excellent quality. He combines technical knowledge with design creativity in a way that’s rare to find.”</p>
+                            <p class="font-semibold text-md mt-2">Brandon Emanuel</p>
+                            <p class="text-xs text-custom-orange">Web Developer</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="freelance-cta-section" class="py-12 text-center border-b border-gray-800">
+                    <h3 class="text-2xl font-bold mb-4">I'm Available for Freelancing</h3>
+                    <a href="https://wa.me/254798206270?text=Hi%20Macharia%2C%20I%27m%20interested%20in%20hiring%20you%20for%20a%20project" 
+                       class="px-8 py-3 bg-custom-orange hover:bg-red-600 text-white font-medium rounded-full transition">whatsapp me</a>
+                </section>
+
+                <section id="contacts-section" class="py-12">
+                    <div class="text-center">
+                        <h1 class="text-gray-400">contacts|socials</h1>
+                        <span class="text-custom-orange text-sm font-medium tracking-widest">call | whatsapp me</span>
+                        <h2 class="text-3xl font-bold mt-2 mb-8">0798206270</h2>
+
+                        <span class="text-custom-orange text-sm font-medium tracking-widest flex justify-center">Email</span>
+                        <a href="mailto:mungaimacharia904@gmail.com" class=" hover:text-white transition">mungaimacharia904@gmail.com</a>
+                        <span class="text-custom-orange text-sm font-medium tracking-widest flex justify-center"><h1><br>linkedin</h1><br></span>
+                        <a href="https://linkedin.com/in/elijah-macharia-260579270" class=" px-8 py-1 bg-custom-orange hover:bg-red-600 text-white font-medium rounded-full transition">View profile</a>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
